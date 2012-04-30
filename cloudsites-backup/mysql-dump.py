@@ -78,14 +78,14 @@ def main():
         password = creds[1]
         database = creds[2]
         hostname = creds[3]
-        if dumpDir.endswith('/'):
-            dumpfile = "%s%s.sql" % (dumpDir, database)
-        else:
-            dumpfile = "%s/%s.sql" % (dumpDir, database)
+        filename = '%s.sql' % (database,)
+
+        # Combine folder and filename, resolving any symlinks.
+        dumpFile = os.path.realpath(os.path.join(dumpDir, filename))
 
         # Don't overwrite existing files.
-        if os.path.isfile(dumpfile):
-            msg = "ERROR: %s already exists.\n" % (dumpfile,)
+        if os.path.isfile(dumpFile):
+            msg = "ERROR: %s already exists.\n" % (dumpFile,)
             sys.stderr.write(msg)
             sys.exit(1)
 
@@ -94,14 +94,14 @@ def main():
         sys.stdout.write(msg)
         sys.stdout.flush()
         textObj = dbDump(username, password, database, hostname)
-        f = open(dumpfile, 'w')
+        f = open(dumpFile, 'w')
         f.write(textObj)
         f.close()
         sys.stdout.write('done.\n')
         
         # A basic check to make sure we closed our file correctly.
         if not f.closed:
-            msg = "ERROR: Unable to write our database backup to %s\n" % (dumpfile)
+            msg = "ERROR: Unable to write our database backup to %s\n" % (dumpFile)
             sys.stderr.write(msg)
             sys.exit(1)
 
