@@ -25,4 +25,7 @@ this:
 So that's the basic idea. I'll try to update this as I go, or at the very least,
 once I'm done. Hopefully, this will be useful to someone else.
 
+Note that you will need the following library for the python scripts:
+https://github.com/rackspace/python-cloudfiles
+
 -Jim
