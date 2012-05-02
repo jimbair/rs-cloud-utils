@@ -27,11 +27,14 @@ if len(sys.argv) != 2:
     usage()
 
 # The file to upload.
-filename = sys.argv[1]
+localFile = sys.argv[1]
 
 # Make sure the file exists
-if not os.path.isfile(filename):
+if not os.path.isfile(localFile):
     usage()
+
+# Remove the path when naming it on Cloud Files
+filename = os.path.basename(localFile)
 
 # Connect to Rackspace Cloud Files with our API
 conn = cloudfiles.get_connection(username, apiKey)
@@ -47,7 +50,7 @@ msg = "INFO: Uploadng %s to %s..." % (filename, backupContainer)
 sys.stdout.write(msg)
 sys.stdout.flush()
 ourBackup = ourContainer.create_object(filename)
-ourBackup.load_from_filename(filename)
+ourBackup.load_from_filename(localFile)
 sys.stdout.write('done.\n')
 
 # All done.

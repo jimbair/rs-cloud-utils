@@ -46,9 +46,9 @@ for i in $storage; do
 
     # Make sure we have the libs we need.
     # PHP libs to push updates (soon to be replaced by Python)
-    cfBackup="${ourPath}/cloudfiles/cloudfiles_backup.php"
+    cfBackup="${ourPath}/bin/cloudfiles_push.py"
     if [ ! -s "${cfBackup}" ]; then
-         echo "FAILURE: Unable to source our Cloud Files PHP script."
+         echo "FAILURE: Unable to source our Cloudfiles Push script."
          exit 1
     fi
 
@@ -56,6 +56,13 @@ for i in $storage; do
     dbBackup="${ourPath}/bin/mysql-dump.py"
     if [ ! -s "${dbBackup}" ]; then
         echo "FAILURE: Unable to find our DB backup script."
+        exit 1
+    fi
+
+    # Needed to delete old backups.
+    cfRotate="${ourPath}/bin/cloudfiles_rotate.py"
+    if [ ! -s "${dbBackup}" ]; then
+        echo "FAILURE: Unable to find our Cloudfiles Rotation script."
         exit 1
     fi
 
@@ -81,17 +88,10 @@ for i in $storage; do
     fi
 
     # Upload our files to cloud files.
-    # First argument is the location of the backup file, second argument is the name to be used when uploaded
     for tarball in ${fullBack}*; do
-        filename=$(echo $tarball | awk -F '/' '{print $NF}')
-        if [ -z "${filename}" ]; then
-            echo "FAILURE: Unable to find our tarball name."
-            exit 1
-        fi
-
-        php ${cfBackup} ${tarball} ${filename}
+        ${cfBackup} ${tarball}
         if [ $? -ne 0 ]; then
-            echo "FAILURE: Our command 'php ${cfBackup} ${tarball} ${ourPath}${tarball}' failed."
+            echo "FAILURE: Our command 'php ${cfBackup} ${tarball}' failed."
             exit 1
         fi
     done
