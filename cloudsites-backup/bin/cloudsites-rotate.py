@@ -23,11 +23,7 @@ for ourType in rotationTypes:
 conn = cloudfiles.get_connection(username, apiKey)
 
 # Get our container object for where we plan to back everything up to.
-containers = conn.get_all_containers()
-for container in containers:
-    if container.name == backupContainer:
-        ourContainer = container
-        break
+ourContainer = conn.get_container(backupContainer)
 
 # Get all of the files in our container.
 ourObjects = ourContainer.get_objects()
@@ -92,6 +88,6 @@ oldBackup = sorted(dateCheck, key=dateCheck.get, reverse=False)[0]
 for obj in ourObjects:
     if oldBackup in obj.name:
         print "Purging old backup", obj
-        #ourContainer.delete_object(obj.name)
+        ourContainer.delete_object(obj.name)
 
 sys.exit(0) 

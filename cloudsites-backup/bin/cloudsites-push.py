@@ -37,12 +37,9 @@ filename = os.path.basename(localFile)
 conn = cloudfiles.get_connection(username, apiKey)
 
 # Get our container object for where we plan to back everything up to.
-containers = conn.get_all_containers()
-for container in containers:
-    if container.name == backupContainer:
-        ourContainer = container
-        break
+ourContainer = conn.get_container(backupContainer)
 
+# Upload our file.
 msg = "INFO: Uploading %s to %s..." % (filename, backupContainer)
 sys.stdout.write(msg)
 sys.stdout.flush()
