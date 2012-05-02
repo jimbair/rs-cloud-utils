@@ -8,7 +8,7 @@ import sys
 import cloudfiles
 
 # Get our personal info
-from cloudsites-config import *
+from config import *
 
 # You shouldn't have to edit anything below here.
 rotationTypes = ('weekly', 'daily' )

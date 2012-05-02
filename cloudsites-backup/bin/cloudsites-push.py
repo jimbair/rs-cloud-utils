@@ -9,7 +9,7 @@ import sys
 import cloudfiles
 
 # Get our personal info
-from cloudsites-config import *
+from config import *
 
 prog = sys.argv[0]
 
