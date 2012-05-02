@@ -46,7 +46,7 @@ for i in $storage; do
 
     # Make sure we have the libs we need.
     # PHP libs to push updates (soon to be replaced by Python)
-    cfBackup="${ourPath}/bin/cloudfiles_push.py"
+    cfBackup="${ourPath}/bin/cloudfiles-push.py"
     if [ ! -s "${cfBackup}" ]; then
          echo "FAILURE: Unable to source our Cloudfiles Push script."
          exit 1
@@ -60,7 +60,7 @@ for i in $storage; do
     fi
 
     # Needed to delete old backups.
-    cfRotate="${ourPath}/bin/cloudfiles_rotate.py"
+    cfRotate="${ourPath}/bin/cloudfiles-rotate.py"
     if [ ! -s "${dbBackup}" ]; then
         echo "FAILURE: Unable to find our Cloudfiles Rotation script."
         exit 1
