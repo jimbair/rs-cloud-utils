@@ -43,7 +43,7 @@ for container in containers:
         ourContainer = container
         break
 
-msg = "INFO: Uploadng %s to %s..." % (filename, backupContainer)
+msg = "INFO: Uploading %s to %s..." % (filename, backupContainer)
 sys.stdout.write(msg)
 sys.stdout.flush()
 ourBackup = ourContainer.create_object(filename)
