@@ -8,11 +8,8 @@ import sys
 # We need to make sure we have these locally.
 import cloudfiles
 
-username = 'your_username_here'
-apiKey = 'yourapigoeshere1234567'
-
-# You shouldn't have to edit anything below here.
-backupContainer = 'cloudsites'
+# Get our personal info
+from cloudsites-config import *
 
 prog = sys.argv[0]
 
