@@ -10,9 +10,12 @@ import cloudfiles
 # Get our personal info
 from config import *
 
-# You shouldn't have to edit anything below here.
+# More required information
 rotationTypes = ('weekly', 'daily' )
 ourBackups, dates = [], []
+
+# This lets our rotationTypes be dynamic
+maxDateNum = len(rotationTypes) + 1
 
 # Build our dict for or rotation types for count later.
 rotationCount = {}
@@ -43,7 +46,7 @@ for ourFile in ourBackups:
 # At most, we should have 3 dates present:
 # Either two daily and a weekly, or two 
 # weekly and a daily.
-if len(dates) > 3:
+if len(dates) > maxDateNum:
     msg = "ERROR: More than 3 days of files found.\n"
     msg += "Please manually audit your backups and try again.\n"
     # Would be nice to add --force ability like rdiff-backup
