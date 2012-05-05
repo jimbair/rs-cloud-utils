@@ -90,7 +90,10 @@ oldBackup = sorted(dateCheck, key=dateCheck.get, reverse=False)[0]
 # Remove the old objects
 for obj in ourObjects:
     if oldBackup in obj.name:
-        print "Purging old backup", obj
+        msg = "INFO: Purging old backup %s..." % (obj,)
+        sys.stdout.write(msg)
+        sys.stdout.flush()
         ourContainer.delete_object(obj.name)
+        print 'done.'
 
 sys.exit(0) 
