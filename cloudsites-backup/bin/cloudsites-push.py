@@ -13,14 +13,12 @@ from config import *
 
 prog = sys.argv[0]
 
-uploaded = False
-
 # This is a work-around for this issue:
 # https://github.com/rackspace/python-cloudfiles/issues/34
 #
 # How many times you wish to re-try until giving up.
 from ssl import SSLError
-loopNumber, maxLoopNumber = 0, 5
+loopNumber, maxLoopNumber, uploaded = 0, 5, False
 
 def usage():
     msg = "%s - Script to upload CloudSites backups.\n" % (prog,)
