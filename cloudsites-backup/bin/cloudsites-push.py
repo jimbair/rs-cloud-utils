@@ -13,6 +13,12 @@ from config import *
 
 prog = sys.argv[0]
 
+# This is a work-around for this issue:
+# https://github.com/rackspace/python-cloudfiles/issues/34
+#
+# How many times you wish to re-try until giving up.
+loopNumber, maxLoopNumber = 0, 6
+
 def usage():
     msg = "%s - Script to upload CloudSites backups.\n" % (prog,)
     msg += "Usage: %s [FILE]\n" % (prog,)
@@ -40,12 +46,23 @@ conn = cloudfiles.get_connection(username, apiKey)
 ourContainer = conn.get_container(backupContainer)
 
 # Upload our file.
-msg = "INFO: Uploading %s to %s..." % (filename, backupContainer)
-sys.stdout.write(msg)
-sys.stdout.flush()
-ourBackup = ourContainer.create_object(filename)
-ourBackup.load_from_filename(localFile)
-sys.stdout.write('done.\n')
+while loopNumber < maxLoopNumber:
+    try:
+        msg = "INFO: Uploading %s to %s..." % (filename, backupContainer)
+        sys.stdout.write(msg)
+        sys.stdout.flush()
+        ourBackup = ourContainer.create_object(filename)
+        ourBackup.load_from_filename(localFile)
+        sys.stdout.write('done.\n')
+        sys.stdout.flush()
+        break
+    except:
+        loopNumber += 1
+        msg = "failed.\n"
+        msg += "ERROR: Upload of %s failed.\n" % (filename,)
+        msg += "INFO: Retry #%d beginning.\n" % (loopNumber,)
+        sys.stdout.write(msg)
+        sys.stdout.flush()
 
 # All done.
 sys.exit(0)
