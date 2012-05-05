@@ -13,11 +13,14 @@ from config import *
 
 prog = sys.argv[0]
 
+uploaded = False
+
 # This is a work-around for this issue:
 # https://github.com/rackspace/python-cloudfiles/issues/34
 #
 # How many times you wish to re-try until giving up.
-loopNumber, maxLoopNumber = 0, 6
+from ssl import SSLError
+loopNumber, maxLoopNumber = 0, 5
 
 def usage():
     msg = "%s - Script to upload CloudSites backups.\n" % (prog,)
@@ -46,7 +49,7 @@ conn = cloudfiles.get_connection(username, apiKey)
 ourContainer = conn.get_container(backupContainer)
 
 # Upload our file.
-while loopNumber < maxLoopNumber:
+while loopNumber < maxLoopNumber and not uploaded:
     try:
         msg = "INFO: Uploading %s to %s..." % (filename, backupContainer)
         sys.stdout.write(msg)
@@ -55,8 +58,8 @@ while loopNumber < maxLoopNumber:
         ourBackup.load_from_filename(localFile)
         sys.stdout.write('done.\n')
         sys.stdout.flush()
-        break
-    except:
+        uploaded = True
+    except SSLError:
         loopNumber += 1
         msg = "failed.\n"
         msg += "ERROR: Upload of %s failed.\n" % (filename,)
