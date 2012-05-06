@@ -11,8 +11,6 @@ import cloudfiles
 # Get our personal info
 from config import *
 
-prog = sys.argv[0]
-
 # This is a work-around for this issue:
 # https://github.com/rackspace/python-cloudfiles/issues/34
 #
@@ -21,6 +19,7 @@ from ssl import SSLError
 loopNumber, maxLoopNumber, uploaded = 0, 5, False
 
 def usage():
+    prog = os.path.basename(sys.argv[0])
     msg = "%s - Script to upload CloudSites backups.\n" % (prog,)
     msg += "Usage: %s [FILE]\n" % (prog,)
     sys.stdout.write(msg)
