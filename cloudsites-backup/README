@@ -39,7 +39,7 @@ Cheers!
 
 -Jim
 
-P.S. Oh, and this is written to possibly support multiple storage arrays. However, I
+P.S. This is written to possibly support multiple storage arrays. However, I
 only have one array for my sites, so I have not tested the code. If you try it
 with more than one array and it fails, let me know! I'd be happy to debug.
 
