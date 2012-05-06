@@ -25,7 +25,7 @@ From here, it basically does the following:
 1. Does some basic sanity checks
 2. Dumps the databases provided in config.py into your customer folder
 3. Tars up your entire customer folder on the storage array indicated
-4. Pushes the 5GB tarballs into the cloud
+4. Pushes the 5GB or less tarballs into the cloud
 7. Deletes local db dumps and tarballs we uploaded
 8. Deletes the previous day's/week's scheduled backup, leaving one of each
 
