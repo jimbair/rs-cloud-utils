@@ -11,21 +11,27 @@ this info via an API, so a list of lists is really needed. Also, having one
 cronjob per site seemed painful. So I started finding a way to mimic the way
 Rackspace Cloud Servers are backed up (split tar.gz archives) into Cloud Files.
 
-This is a work in progress, and things will change, but currently it goes like
-this:
+The basic steps are:
 
-1. Update the shell script and python script as needed.
-2. Run the .sh cron via perl (perl can natively run shell/bash scripts).
-3. Does basic checks, then runs the python script to dump the DBs.
-4. Tars up your entire customer folder on the storage array indicated.
-5. Pushes those using PHP into the cloud - plan on making this python.
-6. Deletes local db and tar files.
-7. Rotates older files on the cloudsites container (not yet implemented).
+1. Update cloudsites-backup.sh and bin/config.py with your info
+2. Upload cloudsites-backup.sh to your domain's root folder
+3. Upload bin/ to your customer folder (your root folder when logged into FTP)
+4. Download these: https://github.com/rackspace/python-cloudfiles
+5. Extract and upload the cloudfiles folder into bin from step #3
+6. Run the cloudsites-backup.sh via cron with perl as the shell
 
-So that's the basic idea. I'll try to update this as I go, or at the very least,
-once I'm done. Hopefully, this will be useful to someone else.
+From here, it basically does the following:
 
-Note that you will need the following library for the python scripts:
-https://github.com/rackspace/python-cloudfiles
+1. Does some basic sanity checks
+2. Runs the python script to dump the DBs provided to your folder
+3. Tars up your entire customer folder on the storage array indicated
+4. Pushes the 5GB tarballs into the cloud
+7. Deletes local db dumps and tarballs we uploaded
+8. Deletes the previous day's/week's scheduled backup, leaving one of each
+
+I hope this helps! I tried to be clear without being too long winded. If you run
+into any problems setting this up, message me on twitter: @tsuehpsyde
+
+Cheers!
 
 -Jim
