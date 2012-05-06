@@ -5,13 +5,14 @@ find here:
 
 http://www.rackspace.com/knowledge_center/content/how-use-cron-backup-cloudsites-cloudfiles
 
-The main problem is that this doesn't do a great job of automatically capturing
-all of the DBs on your account from a list. Also, I'm unaware of any awy to pull
-this info via an API, so a list of lists is really needed. Also, having one
-cronjob per site seemed painful. So I started finding a way to mimic the way
-Rackspace Cloud Servers are backed up (split tar.gz archives) into Cloud Files.
+However, it doesn't do a few things the way I wanted. Namely, it doesn't handle
+rotating out old backups, and it requires you to setup the entire thing once
+per domain, which would get old quickly.
 
-The basic steps are:
+So I started finding a way to mimic the way Rackspace Cloud Servers are backed
+up (split tar.gz archives) into Cloud Files, which is what this project is!
+
+To get this setup, the basic steps are:
 
 1. Update cloudsites-backup.sh and bin/config.py with your info
 2. Upload cloudsites-backup.sh to your domain's root folder
@@ -20,7 +21,7 @@ The basic steps are:
 5. Extract and upload the cloudfiles folder into bin from step #3
 6. Run the cloudsites-backup.sh via cron with perl as the shell
 
-From here, it basically does the following:
+Once setup and configured, it basically does the following:
 
 1. Does some basic sanity checks
 2. Dumps the databases provided in config.py into your customer folder
