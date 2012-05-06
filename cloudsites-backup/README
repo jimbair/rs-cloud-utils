@@ -32,10 +32,14 @@ From here, it basically does the following:
 I hope this helps! I tried to be clear without being too long winded. If you run
 into any problems setting this up, message me on twitter: @tsuehpsyde
 
-Oh, and this is written to possibly support multiple storage arrays. However, I
-only have one array for my sites, so I have not tested the code. If you try it
-with more than one array and it fails, let me know! I'd be happy to debug.
+Also, the cron emails don't always provide good logging. Using a wrapper to write
+stderr/stdout into your home folder is extremely useful, especially for debugging.
 
 Cheers!
 
 -Jim
+
+P.S. Oh, and this is written to possibly support multiple storage arrays. However, I
+only have one array for my sites, so I have not tested the code. If you try it
+with more than one array and it fails, let me know! I'd be happy to debug.
+
