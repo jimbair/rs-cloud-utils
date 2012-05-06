@@ -43,7 +43,11 @@ filename = os.path.basename(localFile)
 conn = cloudfiles.get_connection(username, apiKey)
 
 # Get our container object for where we plan to back everything up to.
-ourContainer = conn.get_container(backupContainer)
+# This could be just the creation call, but that seems hacky.
+try:
+    ourContainer = conn.get_container(backupContainer)
+except:
+    ourContainer = conn.create_container(backupContainer)
 
 # Upload our file.
 while loopNumber < maxLoopNumber and not uploaded:
