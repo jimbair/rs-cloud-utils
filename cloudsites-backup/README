@@ -23,7 +23,7 @@ The basic steps are:
 From here, it basically does the following:
 
 1. Does some basic sanity checks
-2. Runs the python script to dump the DBs provided to your folder
+2. Dumps the databases provided in config.py into your customer folder
 3. Tars up your entire customer folder on the storage array indicated
 4. Pushes the 5GB tarballs into the cloud
 7. Deletes local db dumps and tarballs we uploaded
@@ -31,6 +31,10 @@ From here, it basically does the following:
 
 I hope this helps! I tried to be clear without being too long winded. If you run
 into any problems setting this up, message me on twitter: @tsuehpsyde
+
+Oh, and this is written to possibly support multiple storage arrays. However, I
+only have one array for my sites, so I have not tested the code. If you try it
+with more than one array and it fails, let me know! I'd be happy to debug.
 
 Cheers!
 
