@@ -39,7 +39,7 @@ def dbDump(username, password, database, hostname):
 def main():
 
     # Our program name
-    prog = sys.argv[0]
+    prog = os.path.basename(sys.argv[0])
 
     # We need two args (one for prog name, one for directory)
     if len(sys.argv) != 2:
