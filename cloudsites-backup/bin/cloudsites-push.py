@@ -52,7 +52,8 @@ except:
 # Upload our file.
 while loopNumber < maxLoopNumber and not uploaded:
     try:
-        msg = "INFO: Uploading %s to %s..." % (filename, backupContainer)
+        loopNumber += 1
+        msg = "INFO: (Attempt #%d) Uploading %s to %s..." % (loopNumber, filename, backupContainer)
         sys.stdout.write(msg)
         sys.stdout.flush()
         ourBackup = ourContainer.create_object(filename)
@@ -61,10 +62,8 @@ while loopNumber < maxLoopNumber and not uploaded:
         sys.stdout.flush()
         uploaded = True
     except SSLError:
-        loopNumber += 1
         msg = "failed.\n"
         msg += "ERROR: Upload of %s failed.\n" % (filename,)
-        msg += "INFO: Retry #%d beginning.\n" % (loopNumber,)
         sys.stdout.write(msg)
         sys.stdout.flush()
 
