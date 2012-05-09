@@ -15,7 +15,9 @@ from config import *
 # https://github.com/rackspace/python-cloudfiles/issues/34
 #
 # How many times you wish to re-try until giving up.
-from ssl import SSLError
+
+# Cron servers do not have SSL =(
+#from ssl import SSLError
 loopNumber, maxLoopNumber, uploaded = 0, 5, False
 
 def usage():
@@ -61,7 +63,9 @@ while loopNumber < maxLoopNumber and not uploaded:
         sys.stdout.write('done.\n')
         sys.stdout.flush()
         uploaded = True
-    except SSLError:
+    # Cron servers do not have SSL =(
+    #except SSLError:
+    except:
         msg = "failed.\n"
         msg += "ERROR: Upload of %s failed.\n" % (filename,)
         sys.stdout.write(msg)
