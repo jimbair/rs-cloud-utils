@@ -46,21 +46,21 @@ for i in $storage; do
 
     # Make sure we have all of the bin files we need.
     # Pushes our files up to Cloud Files.
-    cfBackup="${ourPath}/bin/cloudfiles-push.py"
+    cfBackup="${ourPath}/bin/cloudsites-push.py"
     if [ ! -s "${cfBackup}" ]; then
          echo "FAILURE: Unable to source our Cloudfiles Push script."
          exit 1
     fi
 
     # Dump our databases to filesystem before tarring everything up)
-    dbBackup="${ourPath}/bin/cloudfiles-mysql.py"
+    dbBackup="${ourPath}/bin/cloudsites-mysql.py"
     if [ ! -s "${dbBackup}" ]; then
         echo "FAILURE: Unable to find our DB backup script."
         exit 1
     fi
 
     # Needed to delete old backups.
-    cfRotate="${ourPath}/bin/cloudfiles-rotate.py"
+    cfRotate="${ourPath}/bin/cloudsites-rotate.py"
     if [ ! -s "${dbBackup}" ]; then
         echo "FAILURE: Unable to find our Cloudfiles Rotation script."
         exit 1
