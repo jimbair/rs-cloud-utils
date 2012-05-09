@@ -75,7 +75,7 @@ def main():
             sys.exit(1)
 
         # Do the deed
-        msg = "Dumping %s..." % (database,)
+        msg = "INFO: Dumping %s..." % (database,)
         sys.stdout.write(msg)
         sys.stdout.flush()
         textObj = dbDump(username, password, database, hostname)
