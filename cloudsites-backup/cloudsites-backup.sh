@@ -44,8 +44,8 @@ for i in $storage; do
         exit 1
     fi
 
-    # Make sure we have the libs we need.
-    # PHP libs to push updates (soon to be replaced by Python)
+    # Make sure we have all of the bin files we need.
+    # Pushes our files up to Cloud Files.
     cfBackup="${ourPath}/bin/cloudfiles-push.py"
     if [ ! -s "${cfBackup}" ]; then
          echo "FAILURE: Unable to source our Cloudfiles Push script."
@@ -53,7 +53,7 @@ for i in $storage; do
     fi
 
     # Dump our databases to filesystem before tarring everything up)
-    dbBackup="${ourPath}/bin/mysql-dump.py"
+    dbBackup="${ourPath}/bin/cloudfiles-mysql.py"
     if [ ! -s "${dbBackup}" ]; then
         echo "FAILURE: Unable to find our DB backup script."
         exit 1
@@ -91,7 +91,7 @@ for i in $storage; do
     for tarball in ${fullBack}*; do
         ${cfBackup} ${tarball}
         if [ $? -ne 0 ]; then
-            echo "FAILURE: Our command 'php ${cfBackup} ${tarball}' failed."
+            echo "FAILURE: Our command '${cfBackup} ${tarball}' failed."
             exit 1
         fi
     done
