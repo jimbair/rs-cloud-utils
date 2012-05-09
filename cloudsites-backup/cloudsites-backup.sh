@@ -83,7 +83,7 @@ for i in $storage; do
     # Backup Site - no verbosity as it's in cron. Also, Cloud Files is limited to 5GB, so split tar as needed.
     tar -czpf /dev/stdout ${ourPath} | split -d -b 5000m - ${fullBack}
     if [ $? -ne 0 ]; then
-        echo "FAILURE: Our command 'tar -czpf /dev/stdout ${ourPath}' then split failed."
+        echo "FAILURE: Our command 'tar -czpf /dev/stdout ${ourPath}' failed."
         exit 1
     fi
 
@@ -95,6 +95,13 @@ for i in $storage; do
             exit 1
         fi
     done
+
+    # Now we need to rotate our backups to remove older versions.
+    ${cfRotate}
+    if [ $? -ne 0 ]; then
+        echo "FAILURE: Our command '${cfRotate}' failed."
+        exit 1
+    fi
 
     # After your backup has been uploaded, remove the tar ball and SQL dumps from the filesystem.
     rm -f ${fullBack}* ${ourPath}/${custNum}_*.sql
