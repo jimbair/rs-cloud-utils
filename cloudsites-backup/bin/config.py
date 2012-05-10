@@ -17,10 +17,9 @@ db2 = 'my-other-db.dc01.superhax.net'
 #
 # Follows dbDump format:
 # User, pass, db, host
-databases = (
-            ( '123456_wordpress', 'l33tp4ssW0Rd', '123456_wpdb', db1 ),
-            ( '123456_phpbb', 'l33tp4ssW0Rd', '123456_phpbbdb', db1 ),
-            ( '123456_personal', 'l33tp4ssW0Rd', '123456_mydb', db2 ),
-            ( '123456_testing', 'l33tp4ssW0Rd', '123456_testdb', db2 ),
-            ( '123456_dev', 'l33tp4ssW0Rd', '123456_devdb', db2 )
-            )
+databases = [( '123456_wordpress', 'l33tp4ssW0Rd', '123456_wpdb', db1 ),
+             ( '123456_phpbb', 'l33tp4ssW0Rd', '123456_phpbbdb', db1 ),
+             ( '123456_personal', 'l33tp4ssW0Rd', '123456_mydb', db2 ),
+             ( '123456_testing', 'l33tp4ssW0Rd', '123456_testdb', db2 ),
+             ( '123456_dev', 'l33tp4ssW0Rd', '123456_devdb', db2 )
+            ]
