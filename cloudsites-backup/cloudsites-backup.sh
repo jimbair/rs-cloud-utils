@@ -113,5 +113,5 @@ for i in $storage; do
 done
 
 # All done
-echo "${prog} ompleted on $(date)"
+echo "${prog} completed on $(date)"
 exit 0
