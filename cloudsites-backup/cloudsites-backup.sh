@@ -81,7 +81,7 @@ for i in $storage; do
     fullBack="${ourPath}/${backupName}"
 
     # Backup Site - no verbosity as it's in cron. Also, Cloud Files is limited to 5GB, so split tar as needed.
-    tar -czpf /dev/stdout ${ourPath} | split -d -b 5000m - ${fullBack}
+    tar -czpf /dev/stdout ${ourPath} | split -d -b 5120m - ${fullBack}
     if [ $? -ne 0 ]; then
         echo "FAILURE: Our command 'tar -czpf /dev/stdout ${ourPath}' failed."
         exit 1
