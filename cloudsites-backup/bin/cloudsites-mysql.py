@@ -57,12 +57,8 @@ def main():
         sys.stderr.write(msg)
         sys.exit(1)
 
-    # For tuple in tuples, backup each database.
-    for creds in databases:
-        username = creds[0]
-        password = creds[1]
-        database = creds[2]
-        hostname = creds[3]
+    # For tuple in list, backup each database.
+    for username, password, database, hostname in databases:
         filename = '%s.sql' % (database,)
 
         # Combine folder and filename, resolving any symlinks.
