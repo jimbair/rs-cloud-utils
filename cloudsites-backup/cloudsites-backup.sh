@@ -33,7 +33,7 @@ prog=$(basename $0)
 echo "${prog} started on $(date)"
 
 # Loop it, in case we have multiple storage arrays
-for i in $storage; do
+for i in ${storage}; do
 
     # Where all of our website files should reside.
     ourPath="/mnt/${i}/${custNum}"
