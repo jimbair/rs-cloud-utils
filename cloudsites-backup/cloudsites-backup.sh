@@ -16,7 +16,7 @@ weekly='Sunday'
 # The rest of this you shouldn't have to touch! Do so with caution.
 today=$(date +%A)
 if [ -z "${today}" ]; then
-    echo "Unable to find today's date."
+    echo "FAILURE: Unable to find today's date." >&2
     exit 1
 fi
 
@@ -40,7 +40,7 @@ for i in ${storage}; do
 
     # Make sure our folder is there.
     if [ ! -d "${ourPath}" ]; then
-        echo "FAILURE: ${ourPath} is missing."
+        echo "FAILURE: ${ourPath} is missing." >&2
         exit 1
     fi
 
@@ -48,28 +48,28 @@ for i in ${storage}; do
     # Pushes our files up to Cloud Files.
     cfBackup="${ourPath}/bin/cloudsites-push.py"
     if [ ! -s "${cfBackup}" ]; then
-         echo "FAILURE: Unable to source our Cloudfiles Push script."
+         echo "FAILURE: Unable to source our Cloudfiles Push script." >&2
          exit 1
     fi
 
     # Dump our databases to filesystem before tarring everything up)
     dbBackup="${ourPath}/bin/cloudsites-mysql.py"
     if [ ! -s "${dbBackup}" ]; then
-        echo "FAILURE: Unable to find our DB backup script."
+        echo "FAILURE: Unable to find our DB backup script." >&2
         exit 1
     fi
 
     # Needed to delete old backups.
     cfRotate="${ourPath}/bin/cloudsites-rotate.py"
     if [ ! -s "${dbBackup}" ]; then
-        echo "FAILURE: Unable to find our Cloudfiles Rotation script."
+        echo "FAILURE: Unable to find our Cloudfiles Rotation script." >&2
         exit 1
     fi
 
     # Backup our databases and check for a clean exit
     ${dbBackup} ${ourPath}
     if [ $? -ne 0 ]; then
-        echo "FAILURE: Our databases failed to backup without error."
+        echo "FAILURE: Our databases failed to backup without error." >&2
         exit 1
     fi
 
@@ -83,7 +83,7 @@ for i in ${storage}; do
     # Backup Site - no verbosity as it's in cron. Also, Cloud Files is limited to 5GB, so split tar as needed.
     tar -czpf /dev/stdout ${ourPath} | split -d -b 5120m - ${fullBack}
     if [ $? -ne 0 ]; then
-        echo "FAILURE: Our command 'tar -czpf /dev/stdout ${ourPath}' failed."
+        echo "FAILURE: Our command 'tar -czpf /dev/stdout ${ourPath}' failed." >&2
         exit 1
     fi
 
@@ -91,7 +91,7 @@ for i in ${storage}; do
     for tarball in ${fullBack}*; do
         ${cfBackup} ${tarball}
         if [ $? -ne 0 ]; then
-            echo "FAILURE: Our command '${cfBackup} ${tarball}' failed."
+            echo "FAILURE: Our command '${cfBackup} ${tarball}' failed." >&2
             exit 1
         fi
     done
@@ -99,14 +99,14 @@ for i in ${storage}; do
     # Now we need to rotate our backups to remove older versions.
     ${cfRotate}
     if [ $? -ne 0 ]; then
-        echo "FAILURE: Our command '${cfRotate}' failed."
+        echo "FAILURE: Our command '${cfRotate}' failed." >&2
         exit 1
     fi
 
     # After your backup has been uploaded, remove the tar ball and SQL dumps from the filesystem.
     rm -f ${fullBack}* ${ourPath}/${custNum}_*.sql
     if [ $? -ne 0 ]; then
-        echo "FAILURE: Removing backup files failed."
+        echo "FAILURE: Removing backup files failed." >&2
         exit 1
     fi
 
